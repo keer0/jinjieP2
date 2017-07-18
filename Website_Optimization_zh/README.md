@@ -55,3 +55,12 @@
 
 * <a href="http://getbootstrap.com/css/">Bootstrap CSS</a>
 * <a href="http://getbootstrap.com/components/">Bootstrap组件</a>
+ 
+##index.html优化
+1.head部分的css,js,font文件进行异步加载，其中style.css改为内联样式
+2.pizzeria.jpg图片用PS压缩到合适尺寸
+##main.js优化
+1.querySelector类改为getElementById或者getElementsByClassName
+2.用%设置披萨尺寸，避免强制布局
+3.scrollTop移到for循环外，避免占用过多资源
+4.pizza数量减少一半，没能测试是否合适
