@@ -512,11 +512,21 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   var items = document.getElementsByClassName('mover');
-  var scrollTop = document.body.scrollTop / 1250;
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin(scrollTop + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-  }
+	var scrollTop = document.body.scrollTop;
+//for (var i = 0; i < items.length; i++) {
+//  var phase = Math.sin(scrollTop + (i % 5));
+//  items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+//}
+  
+var phase = [];
+
+	for (var i = 0; i < 5; i++) {
+	    phase.push(Math.sin(scrollTop / 1250 + i) * 100);
+	}
+	
+	for (var i = 0, max = items.length; i < max; i++) {
+	    items[i].style.left = items[i].basicLeft + phase[i%5] + 'px';
+	}
 
   // 再次使用User Timing API。这很值得学习
   // 能够很容易地自定义测量维度
@@ -529,14 +539,18 @@ function updatePositions() {
 }
 
 // 在页面滚动时运行updatePositions函数
-window.addEventListener('scroll', updatePositions);
+window.addEventListener('scroll',requestUpdate);
+function requestUpdate(){
+	requestAnimationFrame(updatePositions);
+};
 
 // 当页面加载时生成披萨滑窗
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 100; i++) {
-    var elem = document.createElement('img');
+  var elem;
+  for (var i = 0; i < 32; i++) {
+  	elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
